@@ -13,6 +13,10 @@ var SearchStore = require('../stores/SearchStore');
 var SearchView = require('./SearchView');
 var CompanyProfile = require('./CompanyProfileView');
 
+var TechItem = require('./TechItem');
+var TechList = require('./TechList');
+var ProductView = require('./ProductProfileView');
+
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var DefaultRoute = Router.DefaultRoute;
@@ -38,6 +42,7 @@ var routes = (
   <Route name='app' path='/' handler={AppContainer}>
     <Route name='searchView' handler={SearchView}/>
     <Route name='companyProfile' handler={CompanyProfile}/>
+    <Route name='product' handler={ProductView}/>
     <DefaultRoute name='default' handler={SearchView}/>
   </Route>
 );
