@@ -7,12 +7,16 @@ var ProductFavicon = require('../sharedComponents/ProductFavicon');
 
 var UserActionCreators = require('../../actions/UserActionCreators');
 
+var UserStore = require('../../stores/UserStore')
+
 
 var ProductProfileView = React.createClass({
   getInitialState: function(){
     return {
       product_name: "",
       product_url: "",
+      product_followers: '',
+      product_views: '',
       Technologies: []
     }
   },
@@ -22,6 +26,7 @@ var ProductProfileView = React.createClass({
   },
 
   componentDidMount: function() {
+    UserStore.addChangeListener(this._onChange);
     var queryString = window.location.href.split('?')[1];
     $.ajax({
       url: 'api/products/' + '?' + queryString,
@@ -41,8 +46,16 @@ var ProductProfileView = React.createClass({
     });
   },
 
+  componentWillUnmount: function() {
+    UserStore.removeChangeListener(this._onChange);
+  },
+
   handleFollowClick: function() {
     UserActionCreators.userProductFollows(this.state.product_name);
+  },
+
+  _onChange: function() {
+    this.setState(this.getProductStoreState())
   },
 
   render: function() {
